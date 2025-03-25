@@ -180,20 +180,25 @@ describe("Ben-Or decentralized consensus algorithm", () => {
 
       const initialValues: Value[] = [1, 1, 1, 0, 0];
 
+      console.log("_______________________________________________Launchin network________________________________________________");
+      console.log("---------FAULTY", faultyArray);
+      
       const _servers = await launchNetwork(
         faultyArray.length,
         faultyArray.filter((el) => el === true).length,
         initialValues,
         faultyArray
       );
-
+      
       servers.push(..._servers);
-
+      
+      // console.log("________________________________________________Starting Consensus________________________________________________");
       await startConsensus(faultyArray.length);
 
       const time = new Date().getTime();
 
       let states = await getNodesState(faultyArray.length);
+      // console.log("---------STATES 1", states);
 
       while (
         new Date().getTime() - time < timeLimit &&
@@ -202,9 +207,10 @@ describe("Ben-Or decentralized consensus algorithm", () => {
         await delay(200);
 
         states = await getNodesState(faultyArray.length);
+        // console.log("---------STATES i", states);
       }
 
-      console.log("---------STATES", states);
+      // console.log("---------STATES 3", states);
 
       for (let index = 0; index < states.length; index++) {
         const state = states[index];
@@ -223,6 +229,8 @@ describe("Ben-Or decentralized consensus algorithm", () => {
 
     test.todo("Hidden test - Simple Majority - Unanimous Agreement - 1 pt");
 
+
+    
     it("Finality is reached - Fault Tolerance Threshold - 1 pt", async () => {
       const faultyArray = [
         true,
@@ -235,7 +243,10 @@ describe("Ben-Or decentralized consensus algorithm", () => {
         false,
         false,
       ];
-
+      
+      console.log("_______________________________________________________________");
+      console.log("____Finality is reached - Fault Tolerance Threshold - 1 pt_____");
+      console.log("_______________________________________________________________");
       const initialValues: Value[] = [0, 0, 1, 1, 1, 0, 0, 1, 1];
 
       const _servers = await launchNetwork(
@@ -284,10 +295,11 @@ describe("Ben-Or decentralized consensus algorithm", () => {
       ).toBeUndefined();
     });
 
+    
     test.todo(
       "Hidden test - Fault Tolerance Threshold - Unanimous Agreement - 1 pt"
     );
-
+    
     it("Finality is reached - Exceeding Fault Tolerance - 1 pt", async () => {
       const faultyArray = [
         true,
@@ -301,7 +313,11 @@ describe("Ben-Or decentralized consensus algorithm", () => {
         false,
         false,
       ];
-
+      
+      console.log("_______________________________________________________________");
+      console.log("____Finality is reached - Fault Tolerance Threshold - 1 pt_____");
+      console.log("_______________________________________________________________");
+      
       const initialValues: Value[] = [0, 0, 1, 1, 1, 0, 0, 1, 1, 0];
 
       const _servers = await launchNetwork(
